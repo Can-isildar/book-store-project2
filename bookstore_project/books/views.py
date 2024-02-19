@@ -54,3 +54,10 @@ def book_delete(request, pk):
                'name': 'Book',
                }
     return render(request, template_name, context)
+
+
+def book_detail(request, pk):
+    qs = Book.objects.get(pk=pk)
+    template_name = 'book-detail.html'
+    context = {'qs': qs}
+    return render(request, template_name, context)

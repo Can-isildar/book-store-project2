@@ -129,11 +129,11 @@
          {% if user.is_staff %}
          <td>
              <a href="{% url 'update_url_book' book.dbid  %}" class="btn btn-warning">Update</a>
-             <a href="{% url 'update_url_book' book.dbid %}" class="btn btn-danger">Delete</a>
+             <a href="{% url 'delete_url_book' book.dbid %}" class="btn btn-danger">Delete</a>
          </td>
          {% else %}
         <td>
-        <a href="{% url 'update_url_author' book.dbid %}" class="btn btn-success">Book-Detail</a>
+        <a href="{% url 'book-detail' book.dbid %}" class="btn btn-success">Book-Detail</a>
         </td>
     {% endif %}
 

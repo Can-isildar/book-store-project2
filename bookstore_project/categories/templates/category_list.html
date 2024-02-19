@@ -34,7 +34,7 @@
     {% if user.is_staff %}
          <td>
              <a href="{% url 'update_url_category' category.id %}" class="btn btn-warning">Update</a>
-             <a href="{% url 'update_url_category' category.id %}" class="btn btn-danger">Delete</a>
+             <a href="{% url 'delete_url_category' category.id %}" class="btn btn-danger">Delete</a>
          </td>
          {% else %}
         <td>
