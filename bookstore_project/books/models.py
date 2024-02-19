@@ -17,7 +17,7 @@ class Book(models.Model):
     author = models.ManyToManyField(Author, related_name='books', blank=True)
     publisher = models.ManyToManyField(Publisher, related_name='books', blank=True)
     slug = models.SlugField(unique=True)
-    img = models
+    img = models.ImageField(upload_to='images/', null=True, blank=True,)
 
     def save(self, *args, **kwargs):
         if not self.slug:

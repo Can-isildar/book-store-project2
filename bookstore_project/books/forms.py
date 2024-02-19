@@ -1,7 +1,5 @@
 from django import forms
 from .models import Author, Publisher, Category, Book
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 
 
 class BookForm(forms.ModelForm):
@@ -19,9 +17,11 @@ class BookForm(forms.ModelForm):
                                    choices=[(category.id, category.name) for category in Category.objects.all()])
     pub_time = forms.DateField()
 
+    img = forms.ImageField()
+
     class Meta:
         model = Book
-        fields = ("book_name", "price", "author", "publisher", "categories", "pub_time", "ISBN")
+        fields = ("book_name", "img", "price", "author", "publisher", "categories", "pub_time", "ISBN")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -44,7 +44,7 @@
             </div>
                        {% if user.is_authenticated and user.is_staff %}
             <div class="col">
-                <form method="post" action="{% url 'books' %}">{% csrf_token %}
+                <form method="post" action="{% url 'books' %}" enctype="multipart/form-data">{% csrf_token %}
                     <div class="form-group">
                         <label for="id_book_name">Book Name:</label>
                         {{ form.book_name }}
@@ -72,6 +72,10 @@
                     <div class="form-group">
                         <label for="id_ISBN">ISBN:</label>
                         {{ form.ISBN}}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_img">Img:</label>
+                        {{ form.img }}
                     </div>
                     <button type="submit" class="btn btn-success">Submit</button>
                 </form>

@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from core import views as core_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +32,4 @@ urlpatterns = [
     path('authors/', include('authors.urls'), name='author'),  # authors uygulamasının URL'lerini ekleyin
     path('categories/', include('categories.urls'), name='category'),  # categories uygulamasının URL'lerini ekleyin
     path('publishers/', include('publishers.urls'), name='publisher'),  # publishers uygulamasının URL'lerini ekleyin
-]
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

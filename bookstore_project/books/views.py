@@ -9,10 +9,15 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def book_list(request):
     if request.method == 'POST':
-        form = BookForm(request.POST)
+        form = BookForm(request.POST, request.FILES)
+        print("12312312")
         if form.is_valid():
+            print("sadasdasd")
             form.save()
             return redirect('books')
+        else:
+            print(form.errors)
+
     form = BookForm()
     books = BookFilter(request.GET, queryset=Book.objects.all())
     filtered_books = books.qs
