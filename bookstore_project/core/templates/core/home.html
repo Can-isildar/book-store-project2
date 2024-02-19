@@ -1,0 +1,31 @@
+{% extends 'bootstrap_base.html' %}
+
+{% load static %}
+
+{% block css_files %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+
+{% endblock %}
+
+{% block page_title %}
+    index.html
+{% endblock page_title %}
+
+{% block content %}
+
+{% if request.user.is_authenticated %}
+    <h1>Welcome!</h1>
+  <p>{{ request.user.username }}</p>
+{% else %}
+<h5>
+    <a href="{% url 'login' %}">"Firstly, you should log in. Please enter your username and password to sign in."</a></h5>
+{% endif %}
+
+
+{% endblock %}
+
+
+{% block js_files %}
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,148 @@
+{% extends 'bootstrap_base.html' %}
+
+{% load static %}
+
+{% block css_files %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+
+{% endblock %}
+
+{% block page_title %}
+    index.html
+{% endblock page_title %}
+
+{% block content %}
+
+<div class="container">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form method="get" action="{% url 'books' %}">
+                    <div class="form-group">
+                        <label for="id_book_name">Book Name:</label>
+                        {{ filterForm.book_name }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_author">Author:</label>
+                        {{ filterForm.author }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_publisher">Publisher:</label>
+                        {{ filterForm.publisher }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_categories">Category:</label>
+                        {{ filterForm.categories }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_price">Price:</label>
+                        {{ filterForm.price }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </form>
+            </div>
+                       {% if user.is_authenticated and user.is_staff %}
+            <div class="col">
+                <form method="post" action="{% url 'books' %}">{% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_book_name">Book Name:</label>
+                        {{ form.book_name }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_author">Author:</label>
+                        {{ form.author }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_publisher">Publisher:</label>
+                        {{ form.publisher }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_categories">Category:</label>
+                        {{ form.categories }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_price">Price:</label>
+                        {{ form.price }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_pub_time">Pub Time:</label>
+                        {{ form.pub_time }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_ISBN">ISBN:</label>
+                        {{ form.ISBN}}
+                    </div>
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </form>
+                            {% endif %}
+            </div>
+        </div>
+    </div>
+
+     <hr/>
+     <h1>Book List</h1>
+     <table class="table">
+         <thead>
+         <tr>
+             <th>Name</th>
+             <th>Author</th>
+             <th>publisher</th>
+             <th>Price</th>
+             <th>Category</th>
+             <th>Edit</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tbody>
+     {% for book in qs %}
+     <tr>
+         <td>{{ book.book_name}}</td>
+         {% if book.author  %}
+         {% for a in book.author %}
+         <td>
+             {{a}}
+         </td>
+         {% endfor %}
+         {% else %}
+         <td>None</td>
+         {% endif %}
+         {% if book.publisher %}
+         {% for b in  book.publisher %}
+         <td>{{b}}</td>
+         {% endfor %}
+         {% else %}
+         <td>None</td>
+         {% endif %}
+         <td>${{ book.price }}</td>
+         {% if book.categories %}
+         {% for c in  book.categories %}
+         <td>{{c}}</td>
+         {% endfor %}
+         {% else %}
+         <td>None</td>
+         {% endif %}
+         {% if user.is_staff %}
+         <td>
+             <a href="{% url 'update_url_book' book.dbid  %}" class="btn btn-warning">Update</a>
+             <a href="{% url 'update_url_book' book.dbid %}" class="btn btn-danger">Delete</a>
+         </td>
+         {% else %}
+        <td>
+        <a href="{% url 'update_url_author' book.dbid %}" class="btn btn-success">Book-Detail</a>
+        </td>
+    {% endif %}
+
+            {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+{% endblock %}
+
+
+{% block js_files %}
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,181 @@
+<!doctype html>
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+<html lang="{{ LANGUAGE_CODE }}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+
+    <link href="{% static 'bootstrap/sidebar-bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'fonts.css' %}" rel="stylesheet">
+    <link href="{% static 'layout.css' %}" rel="stylesheet">
+
+
+    {% block custom-css %}
+
+    {% endblock %}
+
+    {% block head %}
+    <title>{% block title %}Bootstrap template{% endblock %}</title>
+    {% endblock %}
+  </head>
+
+  <body>
+
+  <div class="page-wrapper">
+
+  {% block page-wrapper %}
+
+  {% block sidebar %}
+
+  <nav id="sidebar">
+     <div class="text-center">
+            <div class="mb-4">
+                <img id="logo" class="rounded mt-4"
+                    src="{% static 'img/cc-logo.svg' %}" alt="">
+            </div>
+            <h3>Sidebar header</h3>
+            <p>{{ user.last_name|default:"Last Name" }}, {{ user.first_name|default:"First name" }}
+                <br />
+            &lt;{{user.username|default:"anonuser"}}&gt;</p>
+      </div>
+
+    <hr />
+    <ul class="list-unstyled components">
+    <li class="active">
+
+        <a href="#homeSubmenu"
+            data-bs-toggle="collapse"
+            aria-expanded="false"
+            role="button"
+            class="dropdown-toggle">Search</a>
+            <ul class="collapse list-unstyled"
+                id="homeSubmenu">
+                <li>
+                    <a href="{% url 'books' %}">Book</a>
+                </li>
+                <li>
+                    <a href="{% url 'authors' %}">Author</a>
+                </li>
+                <li>
+                    <a href="{% url 'publishers'%}">Publisher</a>
+                </li>
+                <li>
+                    <a href="{% url 'categories' %}">Category</a>
+                </li>
+            </ul>
+    </li>
+    </ul>
+  </nav>
+  {% endblock %}
+
+  <div id="content">
+    {% block navbar %}
+    <nav id="navbar-top" class="navbar navbar-expand-sm navbar-light ">
+        <div class="container-fluid">
+
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                <img class="mdi-svg" src="{% static 'mdi/menu.svg' %}" type="image/svg+xml" />
+            </button>
+
+            <button class="btn btn-dark d-inline-block d-sm-none ms-auto"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarTop"
+                    aria-controls="navbarTop"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <img class="mdi-svg" src="{% static 'mdi/menu.svg' %}" type="image/svg+xml" />
+            </button>
+            {% block navbar-links %}
+            <div class="collapse navbar-collapse" id="navbarTop">
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'home' %}">Home</a>
+                    </li>
+                    {% endif %}
+                    {% if user.is_authenticated == False %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'signup' %}">Signup</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item dropdown">
+                        {% if user.is_authenticated %}
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarAdmin" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                         Settings
+                        </a>
+                        {% endif %}
+                        <ul class="dropdown-menu" aria-labelledby="navbarAdmin">
+                          <li><a class="dropdown-item" href="{% url 'edit_profile' %}">
+                              Edit Profile</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                         {% if user.is_authenticated %}
+                      <li class="nav-item active mx-4">
+                        <form action="{% url 'logout' %}" method="post">
+                     {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Logout</button>
+                        </form>
+                    </li>
+                        {% endif %}
+                        </ul>
+                </ul>
+            </div>
+            {% endblock %}
+        </div>
+    </nav>
+    {% endblock %}
+
+    {% block messages %}
+        {% include 'snippets/show_messages.html' %}
+    {% endblock %}
+
+
+
+    <div id="content-wrapper">
+        {% block content %}            
+
+            <h2>Collapsible Sidebar Using Bootstrap
+                <span id="bootstrap-version"></span></h2>
+
+            <script>
+                window.onload = function() {
+                    document.getElementById("bootstrap-version").innerHTML = bootstrap.Tooltip.VERSION
+                }
+            </script>
+
+            <p> Example of <a href="#" class="download-icon"> download link
+            </a> and an <a href="" class="link-icon" >External link</a></p>
+
+
+
+
+        {% endblock %}
+        {% block footer %}
+        {% endblock %}
+    </div>
+  </div>
+
+{% endblock %}
+</div>
+
+<script src="{% static 'bootstrap/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/logout.js' %}"></script>
+<script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function(event) {
+    document.getElementById("sidebarCollapse").onclick = function () {
+        document.getElementById("sidebar").classList.toggle("active");
+        document.getElementById("content").classList.toggle("active");
+        }
+    });
+</script>
+{% block after-bootstrap-js %}
+
+{% endblock %}
+  </body>
+</html>

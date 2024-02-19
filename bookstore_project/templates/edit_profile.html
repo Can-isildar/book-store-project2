@@ -1,0 +1,26 @@
+{% extends 'bootstrap_base.html' %}
+
+{% load static %}
+
+{% block css_files %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+
+{% endblock %}
+
+{% block page_title %}
+    index.html
+{% endblock page_title %}
+
+{% block content %}
+
+<h1>Signup</h1>
+<form method="POST">
+    {% csrf_token %}
+    <div>{{ form }}</div>
+    <button type="submit" class="btn btn-primary">Edit</button>
+</form>
+
+{% endblock %}
+
+

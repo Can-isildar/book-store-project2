@@ -1,0 +1,64 @@
+{% extends 'bootstrap_base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            {% if user.is_authenticated and user.is_staff%}
+    <form method="post" action="{% url 'publishers' %}">{% csrf_token %}
+<div>
+        <label for="id_book_name">Publisher Name:</label>
+        {{ form.publisher_name}}
+    </div>
+    <div>
+        <label for="id_author">Establish Year:</label>
+        {{ form.establish_year }}
+    </div>
+
+    <button type="submit"  class="btn btn-success">Submit</button>
+    </form>
+            {% endif %}
+
+        <h1>Publisher List</h1>
+<table class="table">
+<thead>
+<tr>
+    <th>Name</th>
+    <th>Establish Year</th>
+    <th>Edit</th>
+</tr>
+</thead>
+<tbody>
+<tbody>
+{% for publisher in qs %}
+<tr>
+<td>{{ publisher.publisher_name}}</td>
+
+<td>{{ publisher.establish_year }}</td>
+    {% if user.is_staff %}
+         <td>
+             <a href="{% url 'update_url_publisher' publisher.id %}" class="btn btn-warning">Update</a>
+             <a href="{% url 'update_url_publisher' publisher.id %}" class="btn btn-danger">Delete</a>
+         </td>
+         {% else %}
+        <td>
+        <a href="{% url 'update_url_publisher' publisher.id %}" class="btn btn-success">Book-Detail</a>
+        </td>
+    {% endif %}
+{% endfor %}
+</tbody>
+</table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block js_files %}
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock %}
