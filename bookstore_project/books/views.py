@@ -10,9 +10,7 @@ from django.contrib.auth.decorators import login_required
 def book_list(request):
     if request.method == 'POST':
         form = BookForm(request.POST, request.FILES)
-        print("12312312")
         if form.is_valid():
-            print("sadasdasd")
             form.save()
             return redirect('books')
         else:
@@ -58,6 +56,7 @@ def book_delete(request, pk):
 
 def book_detail(request, pk):
     qs = Book.objects.get(pk=pk)
+    serializer = BookSerializer(qs, read_only=True)
     template_name = 'book-detail.html'
-    context = {'qs': qs}
+    context = {'qs': serializer.data}
     return render(request, template_name, context)

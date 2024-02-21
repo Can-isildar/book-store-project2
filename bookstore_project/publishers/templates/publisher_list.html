@@ -28,7 +28,11 @@
 <tr>
     <th>Name</th>
     <th>Establish Year</th>
-    <th>Edit</th>
+    {% if user.is_authenticated and user.is_staff %}
+     <th>Edit</th>
+     {% else %}
+     <th>Details</th>
+      {% endif %}
 </tr>
 </thead>
 <tbody>
@@ -45,7 +49,7 @@
          </td>
          {% else %}
         <td>
-        <a href="{% url 'update_url_publisher' publisher.id %}" class="btn btn-success">Book-Detail</a>
+        <a href="{% url 'filter_url_publisher' publisher.id %}" class="btn btn-success">Book-Detail</a>
         </td>
     {% endif %}
 {% endfor %}

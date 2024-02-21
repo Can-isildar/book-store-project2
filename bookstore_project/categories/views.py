@@ -3,6 +3,9 @@ from django.shortcuts import render,redirect
 from .models import Category
 from .forms import CatForm
 from .serializers import CategorySerializer
+from books.models import Book
+from books.serializers import BookSerializer
+from books.filter import BookFilter
 
 @login_required
 def category_list(request):
@@ -46,3 +49,14 @@ def category_delete(request, pk):
                'name': 'Category',
                }
     return render(request, template_name, context)
+
+
+def category_filter(request, pk):
+    category = Category.objects.get(pk=pk)
+    books = Book.objects.filter(categories=category)
+    serializer = BookSerializer(books, many=True)
+    filter_books = BookFilter(request.GET, queryset=Book.objects.all())
+    context = {
+        'qs': serializer.data
+    }
+    return render(request, 'book_list.html', context)

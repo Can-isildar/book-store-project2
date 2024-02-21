@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
 
 
 def register(request):

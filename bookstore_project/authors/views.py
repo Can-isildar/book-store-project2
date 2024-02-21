@@ -3,6 +3,10 @@ from django.shortcuts import render, redirect
 from .forms import AuthForm
 from .models import Author
 from .serializers import AuthorSerializer
+from books.models import Book
+from books.serializers import BookSerializer
+from books.filter import BookFilter
+
 
 @login_required
 def author_list(request):
@@ -48,3 +52,14 @@ def author_delete(request, pk):
                'name': 'Author',
                }
     return render(request, template_name, context)
+
+
+def author_filter(request, pk):
+    author = Author.objects.get(pk=pk)
+    books = Book.objects.filter(author=author)
+    serializer = BookSerializer(books, many=True)
+    filter_books = BookFilter(request.GET, queryset=Book.objects.all())
+    context = {
+        'qs': serializer.data
+    }
+    return render(request, 'book_list.html', context)

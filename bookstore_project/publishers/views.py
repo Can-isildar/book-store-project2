@@ -3,6 +3,10 @@ from django.shortcuts import render, redirect
 from .forms import PublishForm
 from .models import Publisher
 from .serializers import PublisherSerializer
+from books.models import Book
+from books.serializers import BookSerializer
+from books.filter import BookFilter
+
 
 @login_required
 def publisher_list(request):
@@ -46,3 +50,14 @@ def publisher_delete(request, pk):
                'name': 'Publisher',
                }
     return render(request, template_name, context)
+
+
+def publisher_filter(request, pk):
+    publisher = Publisher.objects.get(pk=pk)
+    books = Book.objects.filter(publisher=publisher)
+    serializer = BookSerializer(books, many=True)
+    filter_books = BookFilter(request.GET, queryset=Book.objects.all())
+    context = {
+        'qs': serializer.data
+    }
+    return render(request, 'book_list.html', context)

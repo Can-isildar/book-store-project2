@@ -31,7 +31,11 @@
     <th>Name</th>
     <th>Surname</th>
     <th>Birth Date</th>
+    {% if user.is_authenticated and user.is_staff %}
     <th>Edit</th>
+    {% else %}
+    <th>Details</th>
+    {% endif %}
 </tr>
 </thead>
 <tbody>
@@ -51,7 +55,7 @@
     </td>
         {% else %}
         <td>
-        <a href="{% url 'update_url_author' author.id %}"><button class="btn btn-success">Book detail</button></a>
+        <a href="{% url 'filter_url_author' author.id %}"><button class="btn btn-success">Book detail</button></a>
         </td>
     {% endif %}
 
