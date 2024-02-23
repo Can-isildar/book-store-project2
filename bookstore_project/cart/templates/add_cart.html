@@ -1,0 +1,29 @@
+{% extends 'bootstrap_base.html' %}
+
+
+{% load static %}
+
+
+{% block content %}
+
+
+
+ {% block navbar-links %}
+
+{% block content %}
+    {{ message }}
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="submit" value="Add to Cart">
+    </form>
+{% endblock %}
+
+ {% endblock %}
+
+
+
+
+
+
+{% endblock %}

@@ -9,7 +9,7 @@
 {% block content %}
 
 <h1>Login</h1>
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
    <div class="text-align=center; justify-content=space-between;"> {{ form.as_p }} </div>
     <button type="submit" class="btn btn-primary">Login</button>

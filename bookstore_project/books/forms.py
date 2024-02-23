@@ -17,7 +17,7 @@ class BookForm(forms.ModelForm):
                                    choices=[(category.id, category.name) for category in Category.objects.all()])
     pub_time = forms.DateField()
 
-    img = forms.ImageField()
+    img = forms.ImageField(required=False)
 
     class Meta:
         model = Book
@@ -35,3 +35,4 @@ class BookForm(forms.ModelForm):
 
         self.fields['categories'].choices = [(None, '---------')] + [(category.id, category.name) for category in
                                                                      Category.objects.all()]
+

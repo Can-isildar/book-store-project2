@@ -28,7 +28,11 @@ INSTALLED_APPS = [
     'categories',  # categories uygulamasını ekleyin
     'publishers',  # publishers uygulamasını ekleyin
     'django_filters',
+    'bootstrap5',
+    'django_bootstrap5',
+    'cart',
 ]
+
 
 # Middleware sırasını belirtin
 MIDDLEWARE = [

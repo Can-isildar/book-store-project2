@@ -31,15 +31,19 @@ def book_list(request):
 
 def book_update(request, pk):
     obj = Book.objects.get(pk=pk)
-    form = BookForm(instance=obj)
     if request.method == 'POST':
-        form = BookForm(request.POST, instance=obj)
+        form = BookForm(request.POST, request.FILES, instance=obj)
         if form.is_valid():
             form.save()
             return redirect('books')
+    else:
+        form = BookForm(instance=obj)
     template_name = 'update_url.html'
-    context = {'form': form}
+    context = {'form': form,
+               'pk': pk,
+               }
     return render(request, template_name, context)
+
 
 
 def book_delete(request, pk):

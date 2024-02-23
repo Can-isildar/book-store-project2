@@ -17,21 +17,15 @@ class Book(models.Model):
     author = models.ManyToManyField(Author, related_name='books', blank=True)
     publisher = models.ManyToManyField(Publisher, related_name='books', blank=True)
     slug = models.SlugField(unique=True)
-    img = models.ImageField(upload_to='images/', null=True, blank=True, )
+    img = models.ImageField(upload_to='images/', null=True, blank=True,)
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(f"{self.book_name}-{self.uuid}")
+            self.slug = slugify(f"{self.book_name}-{self.dbid}")
+        super().save(*args, **kwargs)
+        if not self.slug:
+            self.slug = slugify(f"{self.book_name}-{self.dbid}")
         super().save(*args, **kwargs)
 
     def __str__(self):
         return self.book_name
-
-    def get_authors_list(self):
-        return list(self.authors.all())
-
-    def get_categories_list(self):
-        return list(self.categories.all())
-
-    def get_publishers_list(self):
-        return list(self.authors.all())

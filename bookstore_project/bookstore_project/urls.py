@@ -28,8 +28,9 @@ urlpatterns = [
     path('', auth_views.LoginView.as_view(redirect_authenticated_user=True, template_name='login.html'), name='login'),
     path('homepage/', core_views.home, name='user-home'),
     path('core/',include('core.urls')),
-    path('books/', include('books.urls'), name='book'),  # books uygulamasının URL'lerini ekleyin
+    path('books', include('books.urls'), name='book'),  # books uygulamasının URL'lerini ekleyin
     path('authors/', include('authors.urls'), name='author'),  # authors uygulamasının URL'lerini ekleyin
     path('categories/', include('categories.urls'), name='category'),  # categories uygulamasının URL'lerini ekleyin
     path('publishers/', include('publishers.urls'), name='publisher'),  # publishers uygulamasının URL'lerini ekleyin
+    path('cart/', include('cart.urls'), name='cart'),
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
