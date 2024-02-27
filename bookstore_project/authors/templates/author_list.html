@@ -4,25 +4,40 @@
 
 {% block content %}
 
-<div class="container">
-    <div class="row">
-        <div class="col">
     {% if user.is_authenticated and user.is_staff %}
-    <form method="post" action="{% url 'authors' %}">{% csrf_token %}
-<div>
-        <label for="id_book_name">Author Name:</label>
-        {{ form.author_name}}
-    </div>
-    <div>
-        <label for="id_author">Author Surname:</label>
-        {{ form.author_surname }}
-    </div>
-    <div>
-        <label for="id_publisher">Birth Date:</label>
-        {{ form.birth_date }}
-    </div>
-    <button type="submit"  class="btn btn-success">Submit</button>
-    </form>
+<div class="container">
+<form method="post" action="{% url 'authors' %}" class="row gy-2 gx-3 align-items-center">{% csrf_token %}
+    <div class="col-auto">
+      <label for="autoSizingInputGroup">
+          <div class="card">
+             <div class="card-body">
+                 <h6>Author Name <br> {{ form.author_name}}</h6>
+             </div>
+          </div>
+      </label>
+
+       <label for="autoSizingInputGroup">
+          <div class="card">
+             <div class="card-body">
+                 <h6>Author Surname <br> {{ form.author_surname }}</h6>
+             </div>
+          </div>
+      </label>
+
+      <label for="autoSizingInputGroup">
+          <div class="card">
+             <div class="card-body">
+                 <h6>Birth Date<br> {{ form.birth_date }}</h6>
+             </div>
+          </div>
+      </label>
+        <br>
+     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="submit"  class="btn btn-success my-2">Submit</button>
+     </div>
+
+</form>
+</div>
     {% endif %}
         <h1>Author List</h1>
 <table class="table">
@@ -55,7 +70,7 @@
     </td>
         {% else %}
         <td>
-        <a href="{% url 'filter_url_author' author.id %}"><button class="btn btn-success">Book detail</button></a>
+        <a href="{% url 'filter_url_author' author.id %}"><button class="btn btn-success">Filter by Author</button></a>
         </td>
     {% endif %}
 

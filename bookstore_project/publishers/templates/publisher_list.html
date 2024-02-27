@@ -5,22 +5,32 @@
 {% block content %}
 
 <div class="container">
-    <div class="row">
-        <div class="col">
-            {% if user.is_authenticated and user.is_staff%}
-    <form method="post" action="{% url 'publishers' %}">{% csrf_token %}
-<div>
-        <label for="id_book_name">Publisher Name:</label>
-        {{ form.publisher_name}}
-    </div>
-    <div>
-        <label for="id_author">Establish Year:</label>
-        {{ form.establish_year }}
-    </div>
+        {% if user.is_authenticated and user.is_staff%}
+    <form method="post" action="{% url 'publishers' %}" class="row gy-2 gx-3 align-items-center">{% csrf_token %}
+    <div class="col-auto">
+      <label for="autoSizingInputGroup">
+          <div class="card">
+             <div class="card-body">
+                 <h6>Publisher Name <br> {{ form.publisher_name}}</h6>
+             </div>
+          </div>
+      </label>
 
-    <button type="submit"  class="btn btn-success">Submit</button>
+            <label for="autoSizingInputGroup">
+                <div class="card">
+                    <div class="card-body">
+                        <h6>Establish Year <br> {{ form.establish_year }}</h6>
+                     </div>
+                </div>
+             </label>
+    </div>
+            <br>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <button type="submit"  class="btn btn-success my-2">Submit</button>
+    </div>
     </form>
-            {% endif %}
+</div>
+          {% endif %}
 
         <h1>Publisher List</h1>
 <table class="table">
@@ -49,15 +59,14 @@
          </td>
          {% else %}
         <td>
-        <a href="{% url 'filter_url_publisher' publisher.id %}" class="btn btn-success">Book-Detail</a>
+        <a href="{% url 'filter_url_publisher' publisher.id %}" class="btn btn-success">Filter by Publisher</a>
         </td>
     {% endif %}
 {% endfor %}
 </tbody>
 </table>
-        </div>
-    </div>
-</div>
+
+
 
 
 {% endblock %}

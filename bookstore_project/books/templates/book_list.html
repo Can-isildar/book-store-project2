@@ -15,77 +15,136 @@
 {% block content %}
 
 {% if filterForm %}
-<div class="container">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <form method="get" action="{% url 'books' %}">
-                    <div class="form-group">
-                        <label for="id_book_name">Book Name:</label>
-                        {{ filterForm.book_name }}
-                    </div>
-                    <div class="form-group">
-                        <label for="id_author">Author:</label>
-                        {{ filterForm.author }}
-                    </div>
-                    <div class="form-group">
-                        <label for="id_publisher">Publisher:</label>
-                        {{ filterForm.publisher }}
-                    </div>
-                    <div class="form-group">
-                        <label for="id_categories">Category:</label>
-                        {{ filterForm.categories }}
-                    </div>
-                    <div class="form-group">
-                        <label for="id_price">Price:</label>
-                        {{ filterForm.price }}
-                    </div>
-                    <button type="submit" class="btn btn-primary">Filter</button>
-                </form>
-            </div>
+<!--------------------------------------------------------------------------------------------------------------------------------------------------->
 
+<form method="get" action="{% url 'books' %}" class="row gy-2 gx-3 align-items-center">
+    <div class="col-auto">
+        <h3>Filter</h3>
+      <label for="autoSizingInputGroup">
+          <div class="card">
+             <div class="card-body">
+                 <h6>Book Name <br> {{ filterForm.book_name }}</h6>
+             </div>
+          </div>
+      </label>
 
-                       {% if user.is_authenticated and user.is_staff %}
-            <div class="col">
-                <form method="post" action="{% url 'books' %}" enctype="multipart/form-data">{% csrf_token %}
-                    <div class="form-group">
-                        <label for="id_book_name">Book Name:</label>
-                        {{ form.book_name }}
-                    </div>
-                    <div class="form-group">
-                        <label for="id_author">Author:</label>
-                        {{ form.author }}
-                    </div>
-                    <div class="form-group">
-                        <label for="id_publisher">Publisher:</label>
-                        {{ form.publisher }}
-                    </div>
-                    <div class="form-group">
-                        <label for="id_categories">Category:</label>
-                        {{ form.categories }}
-                    </div>
-                    <div class="form-group">
-                        <label for="id_price">Price:</label>
-                        {{ form.price }}
-                    </div>
-                    <div class="form-group">
-                        <label for="id_pub_time">Pub Time:</label>
-                        {{ form.pub_time }}
-                    </div>
-                    <div class="form-group">
-                        <label for="id_ISBN">ISBN:</label>
-                        {{ form.ISBN}}
-                    </div>
-                    <div class="form-group">
-                        <label for="id_img">Img:</label>
-                        {{ form.img }}
-                    </div>
-                    <button type="submit" class="btn btn-success">Submit</button>
-                </form>
-                            {% endif %}
-            </div>
+      <label for="id_author">
+          <div class="card">
+             <div class="card-body">
+                 <h6>Author <br> {{ filterForm.author }}</h6>
+             </div>
+          </div>
+      </label>
+
+      <label for="id_publisher">
+          <div class="card">
+             <div class="card-body">
+                 <h6>Publisher <br> {{ filterForm.publisher }}</h6>
+             </div>
+          </div>
+      </label>
+
+      <label for="id_categories">
+           <div class="card">
+             <div class="card-body">
+                 <h6>Category <br> {{ filterForm.categories }}</h6>
+             </div>
+          </div>
+      </label>
+
+      <label for="id_price">
+          <div class="card">
+             <div class="card-body">
+                 <h6>Price <br> {{ filterForm.price }}</h6>
+             </div>
+          </div>
+      </label>
+        <br>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="submit" class="btn btn-primary my-2">Filter</button>
         </div>
-    </div>
+
+</div>
+</form>
+
+    <hr class="dropdown-divider">
+                       {% if user.is_authenticated and user.is_staff %}
+<form method="post" action="{% url 'books' %}" enctype="multipart/form-data" class="row gy-2 gx-3 align-items-center">{% csrf_token %}
+      <div class="col-auto">
+
+         <label for="id_book_name">
+             <div class="card">
+             <div class="card-body">
+                 <h6>Book <br> {{ form.book_name }}</h6>
+             </div>
+            </div>
+         </label>
+
+         <label for="id_author">
+             <div class="card">
+                <div class="card-body">
+                    <h6>Author <br> {{ form.author }}</h6>
+                </div>
+            </div>
+         </label>
+
+         <label for="id_publisher">
+            <div class="card">
+                <div class="card-body">
+                    <h6>Publisher <br> {{ form.publisher }}</h6>
+                </div>
+            </div>
+         </label>
+
+         <label for="id_categories">
+            <div class="card">
+                <div class="card-body">
+                    <h6>Category <br> {{ form.categories }}</h6>
+                </div>
+            </div>
+         </label><br>
+
+         <label for="id_price">
+             <div class="card">
+                <div class="card-body">
+                    <h6>Price <br> {{ form.price }} </h6>
+                </div>
+            </div>
+         </label>
+
+         <label for="formFile">
+             <div class="card">
+                <div class="card-body">
+                    <h6>Pub-Time <br> {{ form.pub_time }}</h6>
+                </div>
+            </div>
+         </label>
+
+         <label for="formFile">
+            <div class="card">
+                <div class="card-body">
+                    <h6>ISBN <br> {{ form.ISBN}}</h6>
+                </div>
+            </div>
+         </label>
+
+         <label for="formFile" aria-label="img sec">
+             <div class="card">
+                <div class="card-body">
+                    <h6> Image <br> {{ form.img }}</h6>
+                </div>
+            </div>
+         </label>
+          <br>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="submit" class="btn btn-success my-2">Submit</button>
+          </div>
+            </div>
+</form>
+
+                            {% endif %}
+
+
     {% endif %}
 
      <hr/>

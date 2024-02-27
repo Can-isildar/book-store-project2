@@ -5,6 +5,7 @@ import os
 # Django'nun sağladığı geliştirme ortamı ayarlarını kullanın
 from django.conf import settings
 
+
 # Temel ayarlar
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -31,8 +32,14 @@ INSTALLED_APPS = [
     'bootstrap5',
     'django_bootstrap5',
     'cart',
+    "django_icons",
 ]
 
+DJANGO_ICONS = {
+    "ICONS": {
+        "edit": {"name": "far fa-pencil"},
+    },
+}
 
 # Middleware sırasını belirtin
 MIDDLEWARE = [

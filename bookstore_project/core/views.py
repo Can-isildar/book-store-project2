@@ -28,7 +28,7 @@ def get_profile_detail(request):
 
 @login_required
 def home(request):
-   return render(request, 'core/home.html')
+    return render(request, 'core/home.html')
 
 
 @login_required

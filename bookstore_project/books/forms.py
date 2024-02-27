@@ -3,7 +3,7 @@ from .models import Author, Publisher, Category, Book
 
 
 class BookForm(forms.ModelForm):
-    book_name = forms.CharField(required=False)
+    book_name = forms.CharField(required=False )
 
     price = forms.FloatField(required=True, min_value=0)
 
