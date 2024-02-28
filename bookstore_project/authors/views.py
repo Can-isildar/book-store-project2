@@ -26,11 +26,9 @@ def author_list(request):
 
 
 def author_update(request, pk):
-    print('12312312')
     obj = Author.objects.get(pk=pk)
     form = AuthForm(instance=obj)
     if request.method == 'POST':
-        print('sadasdads')
         form = AuthForm(request.POST, instance=obj)
         if form.is_valid():
             form.save()

@@ -22,13 +22,13 @@
               <p class="text-white-50 mb-5">Please enter your login and password!</p>
 
               <div class="form-outline form-white mb-4">
-               <div class="form-control-lg">{{ form.username }}</div>
-                <label class="form-label" for="typeEmailX">Email</label>
+              <i class="bi bi-person-circle"></i>  <label class="form-label" for="typeEmailX">Username</label>
+                  <div class="form-control-lg">{{ form.username }}</div>
               </div>
 
               <div class="form-outline form-white mb-4">
-               <div class="form-control-lg">{{ form.password }}</div>
-                <label class="form-label" for="typePasswordX">Password</label>
+               <i class="bi bi-key-fill"></i>  <label class="form-label" for="typePasswordX">Password</label>
+                   <div class="form-control-lg" >{{ form.password }}</div>
               </div>
 
               <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>

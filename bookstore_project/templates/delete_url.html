@@ -6,7 +6,7 @@
 <form method="post" enctype="multipart/form-data">{% csrf_token %}
     Are you sure you want to delete "{{ obj }}" ?
 
-    <button type="submit" value="previous page" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+    <a href="{{request.META.HTTP_REFERER|escape}}"></a> <button class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
     <button type="submit" value="Submit" class="btn btn-primary">Delete</button>
 </form>
 

@@ -61,14 +61,17 @@
       </label>
         <br>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="button" value="Reset" id="resetBtn" onClick="this.form.reset()"  class="btn btn-warning my-2">
+                Reset
+            </button>
             <button type="submit" class="btn btn-primary my-2">Filter</button>
         </div>
 
 </div>
 </form>
-
-    <hr class="dropdown-divider">
                        {% if user.is_authenticated and user.is_staff %}
+    <hr class="dropdown-divider">
+
 <form method="post" action="{% url 'books' %}" enctype="multipart/form-data" class="row gy-2 gx-3 align-items-center">{% csrf_token %}
       <div class="col-auto">
 
@@ -137,6 +140,9 @@
          </label>
           <br>
           <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <button type="button" value="Reset" id="resetBtn1" onClick="this.form.reset()"  class="btn btn-warning my-2">
+                Reset
+            </button>
             <button type="submit" class="btn btn-success my-2">Submit</button>
           </div>
             </div>
