@@ -21,10 +21,10 @@ class Book(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(f"{self.book_name}-{self.dbid}")
+            self.slug = slugify(f"{self.book_name}-{self.uuid}")
         super().save(*args, **kwargs)
         if not self.slug:
-            self.slug = slugify(f"{self.book_name}-{self.dbid}")
+            self.slug = slugify(f"{self.book_name}-{self.uuid}")
         super().save(*args, **kwargs)
 
     def __str__(self):
