@@ -2,15 +2,13 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
+from .models import CustomUser
 
 
 class CustomUserCreationForm(UserCreationForm):
-    username = forms.CharField( min_length=5, max_length=150, )
-    email = forms.EmailField()
-    password1 = forms.CharField(widget=forms.PasswordInput)
-    password2 = forms.CharField(widget=forms.PasswordInput)
-    first_name = forms.CharField(max_length=100)
-    last_name = forms.CharField( max_length=100)
+    class Meta:
+        model = CustomUser
+        fields = ("username", "email", "first_name", "last_name", "password")
 
     def clean_username(self):
         username = self.cleaned_data['username'].lower()

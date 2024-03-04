@@ -26,10 +26,10 @@
 
             <br>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-             <button type="button" value="Reset" id="resetBtn4" onClick="this.form.reset()"  class="btn btn-warning my-2">
+             <button type="button" value="Reset" id="resetBtn4" onClick="this.form.reset()"  class="btn btn-outline-warning my-2">
                 Reset
             </button>
-      <button type="submit"  class="btn btn-success my-2">Submit</button>
+      <button type="submit"  class="btn btn-outline-success my-2">Submit</button>
     </div>
         </div>
     </form>
@@ -63,7 +63,7 @@
          </td>
          {% else %}
         <td>
-        <a href="{% url 'filter_url_publisher' publisher.id %}" class="btn btn-success">Filter by Publisher</a>
+        <a href="{% url 'filter_url_publisher' publisher.id %}" class="btn btn-outline-info">Filter by Publisher</a>
         </td>
     {% endif %}
 {% endfor %}

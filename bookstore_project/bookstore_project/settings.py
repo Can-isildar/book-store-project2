@@ -5,7 +5,6 @@ import os
 # Django'nun sağladığı geliştirme ortamı ayarlarını kullanın
 from django.conf import settings
 
-
 # Temel ayarlar
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -23,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cart',
     'core',
     'books',  # books uygulamasını ekleyin
     'authors',  # authors uygulamasını ekleyin
@@ -31,7 +31,6 @@ INSTALLED_APPS = [
     'django_filters',
     'bootstrap5',
     'django_bootstrap5',
-    'cart',
     "django_icons",
 ]
 
@@ -50,7 +49,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'bookstore_project.middleware.custom_authentication.CustomAuthenticationMiddleware',  # Özel kimlik doğrulama middleware'i
+    # 'bookstore_project.middleware.custom_authentication.CustomAuthenticationMiddleware',  # Özel kimlik doğrulama
+    # middleware'i
 ]
 
 # URL konfigürasyonu
@@ -74,7 +74,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR,'templates'),
+            os.path.join(BASE_DIR, 'templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -83,6 +83,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'cart.context_processors.cart_context_processor',
+                'cart.context_processors.cart_items_count'
             ],
         },
     },
@@ -100,10 +102,8 @@ LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/homepage/'
 LOGOUT_REDIRECT_URL = '/'
 
-
 # Oturum yönetimi ayarları
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

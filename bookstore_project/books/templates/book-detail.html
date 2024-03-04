@@ -1,0 +1,50 @@
+{% extends 'bootstrap_base.html' %}
+
+{% load static %}
+
+
+{% block content %}
+<div class="card mb-3" style="max-width: 900px; margin-left:14%;">
+  <div class="row g-0">
+    <div class="col-md-3 my-2">
+      <img src="{{qs.img}}" class="img-fluid rounded-start" alt="..." style="margin-left:100px;">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body" style="text-align:center;">
+        <h5 class="card-title" style="text-transform: uppercase;">{{ qs.book_name }}</h5>
+        <p class="card-text" >Price : {{ qs.price }}$</p>
+         {% if qs.author %}
+        {% for a in qs.author %}
+        <p class="card-text">Author: {{a}} </p>
+
+        {% endfor %}
+        {% else %}
+        <p>Author: Unknown</p>
+         {% endif %}
+         {% if qs.publisher  %}
+         {% for a in qs.publisher %}
+        <p class="card-text">Publisher: {{a}}</p>
+          {% endfor %}
+         {% else %}
+          <p class="card-text">Publisher: Unknown </p>
+           {% endif %}
+        {% if qs.categories %}
+        {% for a in qs.categories %}
+          <p class="card-text">Category: {{a}} </p>
+          {% endfor %}
+          {% else %}
+
+  <p>Category: Unknown</p>
+  {% endif %}
+          <p>Public Time: {{ qs.pub_time }}</p>
+
+  <a href="{% url 'cart_add' qs.dbid %}" class="btn btn-primary">Add Cart</a>
+
+        <p class="card-text"><small class="text-muted"></small></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

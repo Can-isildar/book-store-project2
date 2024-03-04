@@ -3,13 +3,13 @@
 {% load static %}
 
 {% block css_files %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 
 
 {% endblock %}
 
 {% block page_title %}
-    index.html
+index.html
 {% endblock page_title %}
 
 {% block content %}
@@ -17,209 +17,250 @@
 {% if filterForm %}
 <!--------------------------------------------------------------------------------------------------------------------------------------------------->
 
-<form method="get" action="{% url 'books' %}" class="row gy-2 gx-3 align-items-center">
+<form method="get" action="{% url 'books' %}" id="filterForm" class="row gy-2 gx-3 align-items-center">
     <div class="col-auto">
-        <h3>Filter</h3>
-      <label for="autoSizingInputGroup">
-          <div class="card">
-             <div class="card-body">
-                 <h6>Book Name <br> {{ filterForm.book_name }}</h6>
-             </div>
-          </div>
-      </label>
+        <label for="autoSizingInputGroup">
+            <div class="card">
+                <div class="card-body">
+                    <h6>Book Name <br> {{ filterForm.book_name }}</h6>
+                </div>
+            </div>
+        </label>
 
-      <label for="id_author">
-          <div class="card">
-             <div class="card-body">
-                 <h6>Author <br> {{ filterForm.author }}</h6>
-             </div>
-          </div>
-      </label>
+        <label for="id_author">
+            <div class="card">
+                <div class="card-body">
+                    <h6>Author <br> {{ filterForm.author }}</h6>
+                </div>
+            </div>
+        </label>
 
-      <label for="id_publisher">
-          <div class="card">
-             <div class="card-body">
-                 <h6>Publisher <br> {{ filterForm.publisher }}</h6>
-             </div>
-          </div>
-      </label>
+        <label for="id_publisher">
+            <div class="card">
+                <div class="card-body">
+                    <h6>Publisher <br> {{ filterForm.publisher }}</h6>
+                </div>
+            </div>
+        </label>
 
-      <label for="id_categories">
-           <div class="card">
-             <div class="card-body">
-                 <h6>Category <br> {{ filterForm.categories }}</h6>
-             </div>
-          </div>
-      </label>
+        <label for="id_categories">
+            <div class="card">
+                <div class="card-body">
+                    <h6>Category <br> {{ filterForm.categories }}</h6>
+                </div>
+            </div>
+        </label>
 
-      <label for="id_price">
-          <div class="card">
-             <div class="card-body">
-                 <h6>Price <br> {{ filterForm.price }}</h6>
-             </div>
-          </div>
-      </label>
+        <label for="id_price">
+            <div class="card">
+                <div class="card-body">
+                    <h6>Price <br> {{ filterForm.price }}</h6>
+                </div>
+            </div>
+        </label>
         <br>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button type="button" value="Reset" id="resetBtn" onClick="this.form.reset()"  class="btn btn-warning my-2">
-                Reset
-            </button>
-            <button type="submit" class="btn btn-primary my-2">Filter</button>
+            <a href="{% url 'books' %}" class="my-2" >
+               <button type="button" class="btn btn-outline-warning"> Reset </button>
+            </a>
+            <button type="submit" class="btn btn-outline-primary my-2">Filter</button>
         </div>
 
-</div>
+    </div>
 </form>
-                       {% if user.is_authenticated and user.is_staff %}
-    <hr class="dropdown-divider">
-
+{% if user.is_authenticated and user.is_staff %}
+<hr class="dropdown-divider">
 <form method="post" action="{% url 'books' %}" enctype="multipart/form-data" class="row gy-2 gx-3 align-items-center">{% csrf_token %}
-      <div class="col-auto">
+    <div class="col-auto">
 
-         <label for="id_book_name">
-             <div class="card">
-             <div class="card-body">
-                 <h6>Book <br> {{ form.book_name }}</h6>
-             </div>
+        <label for="id_book_name">
+            <div class="card">
+                <div class="card-body">
+                    <h6>Book <br> {{ form.book_name }}</h6>
+                </div>
             </div>
-         </label>
+        </label>
 
-         <label for="id_author">
-             <div class="card">
+        <label for="id_author">
+            <div class="card">
                 <div class="card-body">
                     <h6>Author <br> {{ form.author }}</h6>
                 </div>
             </div>
-         </label>
+        </label>
 
-         <label for="id_publisher">
+        <label for="id_publisher">
             <div class="card">
                 <div class="card-body">
                     <h6>Publisher <br> {{ form.publisher }}</h6>
                 </div>
             </div>
-         </label>
+        </label>
 
-         <label for="id_categories">
+        <label for="id_categories">
             <div class="card">
                 <div class="card-body">
                     <h6>Category <br> {{ form.categories }}</h6>
                 </div>
             </div>
-         </label><br>
+        </label><br>
 
-         <label for="id_price">
-             <div class="card">
+        <label for="id_price">
+            <div class="card">
                 <div class="card-body">
                     <h6>Price <br> {{ form.price }} </h6>
                 </div>
             </div>
-         </label>
+        </label>
 
-         <label for="formFile">
-             <div class="card">
+        <label for="formFile">
+            <div class="card">
                 <div class="card-body">
                     <h6>Pub-Time <br> {{ form.pub_time }}</h6>
                 </div>
             </div>
-         </label>
+        </label>
 
-         <label for="formFile">
+        <label for="formFile">
             <div class="card">
                 <div class="card-body">
                     <h6>ISBN <br> {{ form.ISBN}}</h6>
                 </div>
             </div>
-         </label>
+        </label>
 
-         <label for="formFile" aria-label="img sec">
-             <div class="card">
+        <label for="formFile" aria-label="img sec">
+            <div class="card">
                 <div class="card-body">
                     <h6> Image <br> {{ form.img }}</h6>
                 </div>
             </div>
-         </label>
-          <br>
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-              <button type="button" value="Reset" id="resetBtn1" onClick="this.form.reset()"  class="btn btn-warning my-2">
+        </label>
+        <br>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="reset" value="Reset" id="resetBtn1"
+                    class="btn btn-outline-warning my-2">
                 Reset
             </button>
-            <button type="submit" class="btn btn-success my-2">Submit</button>
-          </div>
-            </div>
+            <button type="submit" class="btn btn-outline-success my-2">Submit</button>
+        </div>
+    </div>
 </form>
 
-                            {% endif %}
+{% endif %}
 
 
-    {% endif %}
+{% endif %}
 
-     <hr/>
-     <h1>Book List</h1>
-     <table class="table">
-         <thead>
-         <tr>
-             <th>Name</th>
-             <th>Author</th>
-             <th>publisher</th>
-             <th>Price</th>
-             <th>Category</th>
-             {% if user.is_authenticated and user.is_staff %}
-             <th>Edit</th>
-             {% else %}
-             <th>Details</th>
-             {% endif %}
-         </tr>
-         </thead>
-         <tbody>
-         <tbody>
-     {% for book in qs %}
-     <tr>
-         <td>{{ book.book_name}}</td>
-         {% if book.author  %}
-         {% for a in book.author %}
-         <td>
-             {{a}}
-         </td>
-         {% endfor %}
-         {% else %}
-         <td>None</td>
-         {% endif %}
-         {% if book.publisher %}
-         {% for b in  book.publisher %}
-         <td>{{b}}</td>
-         {% endfor %}
-         {% else %}
-         <td>None</td>
-         {% endif %}
-         <td>${{ book.price }}</td>
-         {% if book.categories %}
-         {% for c in  book.categories %}
-         <td>{{c}}</td>
-         {% endfor %}
-         {% else %}
-         <td>None</td>
-         {% endif %}
-         {% if user.is_staff %}
-         <td>
-             <a href="{% url 'update_url_book' book.dbid  %}" class="btn btn-warning">Update</a>
-             <a href="{% url 'delete_url_book' book.dbid %}" class="btn btn-danger">Delete</a>
-         </td>
-         {% else %}
+<hr/>
+<h1>Book List</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Author</th>
+        <th>publisher</th>
+        <th>Price</th>
+        <th>Category</th>
+        {% if user.is_authenticated and user.is_staff %}
+        <th>Edit</th>
+        {% else %}
+        <th>Details</th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    <tbody>
+    {% for book in qs %}
+    <tr>
+        <td>{{ book.book_name}}</td>
+        {% if book.author %}
+        {% for a in book.author %}
         <td>
-        <a href="{% url 'book-detail' book.dbid %}" class="btn btn-info">Buy Now</a>
+            {{a}}
         </td>
-    {% endif %}
+        {% endfor %}
+        {% else %}
+        <td>None</td>
+        {% endif %}
+        {% if book.publisher %}
+        {% for b in book.publisher %}
+        <td>{{b}}</td>
+        {% endfor %}
+        {% else %}
+        <td>None</td>
+        {% endif %}
+        <td>${{ book.price }}</td>
+        {% if book.categories %}
+        {% for c in book.categories %}
+        <td>{{c}}</td>
+        {% endfor %}
+        {% else %}
+        <td>None</td>
+        {% endif %}
+        {% if user.is_staff %}
+        <td>
+            <a href="{% url 'update_url_book' book.dbid  %}" class="btn btn-warning">Update</a>
+            <a href="{% url 'delete_url_book' book.dbid %}" class="btn btn-danger">Delete</a>
+        </td>
+        {% else %}
+        <td>
+            <a href="{% url 'book-detail' book.dbid %}" class="btn btn-info">Buy Now</a>
+        </td>
+        {% endif %}
 
-            {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+</div>
 
 
 {% endblock %}
 
 
 {% block js_files %}
-    <script src="{% static 'js/script.js' %}"></script>
+<script>
+    let filter_field = document.getElementById('filter_field')
+    let all_select = document.getElementsByTagName('select')
+    let form_group = filter_field.getElementsByClassName('form-group')
+    let filter_box = document.getElementById("filter_box")
+
+    for (let i of all_select){
+        i.classList.add('form-control-sm')
+        let first_elm = i.getElementsByTagName("option")
+
+        first_elm[0].innerHTML = "Select"
+    }
+
+    for (let i=0; i<form_group.length; i++){
+        form_group[i].classList.add('col-md-4')
+    }
+</script>
+
+{% if not show_filter %}
+<script>
+    filter_box.style.display = "none"
+</script>
+
+{% endif %}
+
+<script>
+
+    let is_show = document.getElementById("is_show")
+
+    function show_hide_filter(){
+
+        if (filter_box.style.display == 'none'){
+            filter_box.style.display = ''
+            is_show.value = "true"
+        }
+        else{
+            filter_box.style.display = "none"
+            is_show.value = ""
+        }
+
+    }
+</script>
+<script src="{% static 'js/script.js' %}"></script>
 {% endblock %}
