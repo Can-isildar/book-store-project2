@@ -49,7 +49,21 @@
 </section>
 </form>
 
-
-
-
 {% endblock %}
+
+    <script type="text/javascript">
+    $("#uyelikForm").submit(function(e) {
+    $.ajax({
+           type: "POST",
+           url: 'uye_kaydet.php',
+           data: $("#uyelikForm").serialize(), // formdaki tüm bilgileri gönder.
+           success: function(data)
+           {
+               alert(data); // Gelen Cevap
+           }
+         });
+
+    e.preventDefault(); //Formun sayfa üzerinde gönderilmemesini sağlar
+
+    }
+    </script>

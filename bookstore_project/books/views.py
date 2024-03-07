@@ -25,6 +25,7 @@ def book_list(request):
         'form': form,
         'filterForm': books.form,
         'qs': serializer.data,
+        'data': "add successfuly",
     }
     return render(request, 'book_list.html', context)
 

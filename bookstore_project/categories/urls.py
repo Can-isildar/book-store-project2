@@ -3,6 +3,8 @@
 from django.urls import path
 from . import views
 
+app_name="category"
+
 urlpatterns = [
     path('', views.category_list, name='categories'),
     path('update/<int:pk>', views.category_update, name='update_url_category'),

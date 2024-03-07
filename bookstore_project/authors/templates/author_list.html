@@ -4,90 +4,154 @@
 
 {% block content %}
 
-    {% if user.is_authenticated and user.is_staff %}
-<div class="container">
-<form method="post" action="{% url 'authors' %}" class="row gy-2 gx-3 align-items-center">{% csrf_token %}
-    <div class="col-auto">
-      <label for="autoSizingInputGroup">
-          <div class="card">
-             <div class="card-body">
-                 <h6>Author Name <br> {{ form.author_name}}</h6>
-             </div>
-          </div>
-      </label>
+{% if user.is_authenticated and user.is_staff %}
 
-       <label for="autoSizingInputGroup">
-          <div class="card">
-             <div class="card-body">
-                 <h6>Author Surname <br> {{ form.author_surname }}</h6>
-             </div>
-          </div>
-      </label>
-
-      <label for="autoSizingInputGroup">
-          <div class="card">
-             <div class="card-body">
-                 <h6>Birth Date<br> {{ form.birth_date }}</h6>
-             </div>
-          </div>
-      </label>
-        <br>
-     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-           <button type="reset" value="Reset" id="resetBtn" onClick="this.form.reset()"  class="btn btn-outline-warning my-2">
-                Reset
-            </button>
-        <button type="submit"  class="btn btn-outline-success my-2">Submit</button>
-     </div>
-
-</form>
-</div>
-    {% endif %}
-        <h1>Author List</h1>
-<table class="table">
-<thead>
-<tr>
-    <th>Name</th>
-    <th>Surname</th>
-    <th>Birth Date</th>
-    {% if user.is_authenticated and user.is_staff %}
-    <th>Edit</th>
-    {% else %}
-    <th>Details</th>
-    {% endif %}
-</tr>
-</thead>
-<tbody>
-<tbody>
-{% for author in qs %}
-<tr>
-<td>{{ author.author_name}}</td>
-
-<td>{{ author.author_surname }}</td>
-
-<td>{{ author.birth_date}}</td>
-    {% if user.is_staff %}
-    <td>
-        <a href="{% url 'update_url_author' author.id %}" class="btn btn-warning">Update</a>
-        <a href="{% url 'delete_url_author' author.id %}" class="btn btn-danger">Delete</a>
-
-    </td>
-        {% else %}
-        <td>
-        <a href="{% url 'filter_url_author' author.id %}"><button class="btn btn-outline-info">Filter by Author</button></a>
-        </td>
-    {% endif %}
-
-{% endfor %}
-</tbody>
-</table>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+        data-bs-whatever="@getbootstrap">Add Author
+</button>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'author:authors' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Name:</label>
+                        {{ form.author_name}}
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Surname:</label>
+                        {{ form.author_surname}}
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="col-form-label">Birth Date:</label>
+                        {{ form.birth_date}}
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Send message</button>
+            </div>
+            </form>
         </div>
     </div>
 </div>
 
+{% endif %}
+
+<h1>Author List</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Birth Date</th>
+        {% if user.is_authenticated and user.is_staff %}
+        <th>Edit</th>
+        {% else %}
+        <th>Details</th>
+        {% endif %}
+    </tr>
+    </thead>
+    <tbody>
+    <tbody>
+
+    {% for author in qs %}
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel2">Edit</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{% url 'author:update_url_author' author.id %}">
+
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Name:</label>
+                            {{ form.author_name }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">Surname:</label>
+                            {{ form.author_surname }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="col-form-label">Birth Date2:</label>
+                            {{ form.birth_date }}
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Update</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel3">Delete</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{% url 'author:delete_url_author' author.id %}">
+                        {% csrf_token %}
+                        Are you sure you want to delete "{{ author.author_name }}" ?
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    <tr>
+        <td>{{ author.author_name}}</td>
+
+        <td>{{ author.author_surname }}</td>
+
+        <td>{{ author.birth_date}}</td>
+        {% if user.is_staff %}
+        <td>
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal2"
+                    data-bs-whatever="@getbootstrap">Update
+            </button>
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal3"
+                    data-bs-whatever="@getbootstrap">Delete
+            </button>
+
+        </td>
+        {% else %}
+        <td>
+            <a href="{% url 'author:filter_url_author' author.id %}">
+                <button class="btn btn-outline-info">Filter by Author</button>
+            </a>
+        </td>
+        {% endif %}
+
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+</div>
+</div>
 
 {% endblock %}
 
 
 {% block js_files %}
-    <script src="{% static 'js/script.js' %}"></script>
+
+<script src="{% static 'js/script.js' %}"></script>
 {% endblock %}

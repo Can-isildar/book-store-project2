@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     'bootstrap5',
     'django_bootstrap5',
     "django_icons",
+    "django_ajax",
+
 ]
 
 DJANGO_ICONS = {

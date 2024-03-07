@@ -3,6 +3,8 @@
 from django.urls import path
 from . import views
 
+app_name="publisher"
+
 urlpatterns = [
     path('', views.publisher_list, name='publishers'),
     path('update/<int:pk>', views.publisher_update, name='update_url_publisher'),

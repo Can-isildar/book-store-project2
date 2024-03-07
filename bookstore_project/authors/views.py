@@ -1,11 +1,16 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
+from rest_framework import status
+
 from .forms import AuthForm
 from .models import Author
 from .serializers import AuthorSerializer
 from books.models import Book
 from books.serializers import BookSerializer
 from books.filter import BookFilter
+from django_ajax.decorators import ajax
 
 
 @login_required
@@ -13,11 +18,19 @@ def author_list(request):
     form = AuthForm()
     qs = Author.objects.all()
     serializer = AuthorSerializer(qs, many=True)
+
     if request.method == 'POST':
         form = AuthForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('authors')
+            author = form.save()
+            serializer = AuthorSerializer(author)
+            return JsonResponse({
+                'success': True,
+                'message': "Veri Başarıyla Eklendi",
+            })
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors})
+
     template_name = 'author_list.html'
     context = {'form': form,
                'qs': serializer.data,
@@ -25,31 +38,40 @@ def author_list(request):
     return render(request, template_name, context)
 
 
+# def author_update(request, pk):
+#     obj = Author.objects.get(pk=pk)
+#     form = AuthForm(instance=obj)
+#     if request.method == 'POST':
+#         form = AuthForm(request.POST, instance=obj)
+#         if form.is_valid():
+#             form.save()
+#     context = {'form': form, 'name': 'Author', 'obj': obj}
+#     return JsonResponse(context)
+
 def author_update(request, pk):
-    obj = Author.objects.get(pk=pk)
-    form = AuthForm(instance=obj)
     if request.method == 'POST':
-        form = AuthForm(request.POST, instance=obj)
-        if form.is_valid():
-            form.save()
-            return redirect('authors')
-    template_name = 'update_url.html'
-    context = {'form': form,
-               'name': 'Author',
-               }
-    return render(request, template_name, context)
+        try:
+            obj = Author.objects.get(pk=pk)
+            form = AuthForm(request.POST, instance=obj)
+            if form.is_valid():
+                form.save()
+                return JsonResponse({'message': 'Author updated successfully'}, status=status.HTTP_200_OK)
+            else:
+                return JsonResponse(form.errors, status=status.HTTP_400_BAD_REQUEST)
+        except (ValueError, KeyError):
+            return JsonResponse({'message': 'Invalid request data'}, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return JsonResponse({'message': 'Method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 def author_delete(request, pk):
-    obj = Author.objects.get(pk=pk)  # uuid kullanılması daha dogru olur artan id yerine kitap sayfa 249
     if request.method == 'POST':
-        obj.delete()
-        return redirect('authors')
-    template_name = 'delete_url.html'
-    context = {'obj': obj,
-               'name': 'Author',
-               }
-    return render(request, template_name, context)
+        try:
+            obj = Author.objects.get(pk=pk)
+            obj.delete()
+            return JsonResponse({'message':'Author deleted successfuly'}, status=status.HTTP_200_OK)
+        except(ValueError, KeyError):
+            return JsonResponse({'message':'method not allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 def author_filter(request, pk):

@@ -3,6 +3,8 @@
 from django.urls import path
 from . import views
 
+app_name="book"
+
 urlpatterns = [
     path('', views.book_list, name='books'),
     path('update/<int:pk>', views.book_update, name='update_url_book'),

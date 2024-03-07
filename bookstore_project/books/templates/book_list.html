@@ -221,46 +221,17 @@ index.html
 
 {% block js_files %}
 <script>
-    let filter_field = document.getElementById('filter_field')
-    let all_select = document.getElementsByTagName('select')
-    let form_group = filter_field.getElementsByClassName('form-group')
-    let filter_box = document.getElementById("filter_box")
-
-    for (let i of all_select){
-        i.classList.add('form-control-sm')
-        let first_elm = i.getElementsByTagName("option")
-
-        first_elm[0].innerHTML = "Select"
-    }
-
-    for (let i=0; i<form_group.length; i++){
-        form_group[i].classList.add('col-md-4')
-    }
+$(document).on('submit','#post-form',function(e) {
+e.preventDefault();
+$.ajax({
+type: 'POST',
+url : "http://127.0.0.1:8000/books",
+data: {
+csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+},
+success: function(data) {
+alert (data);
+});
+});
 </script>
-
-{% if not show_filter %}
-<script>
-    filter_box.style.display = "none"
-</script>
-
-{% endif %}
-
-<script>
-
-    let is_show = document.getElementById("is_show")
-
-    function show_hide_filter(){
-
-        if (filter_box.style.display == 'none'){
-            filter_box.style.display = ''
-            is_show.value = "true"
-        }
-        else{
-            filter_box.style.display = "none"
-            is_show.value = ""
-        }
-
-    }
-</script>
-<script src="{% static 'js/script.js' %}"></script>
 {% endblock %}

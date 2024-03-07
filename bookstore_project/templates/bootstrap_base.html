@@ -15,6 +15,21 @@
     <link href="{% static 'fonts.css' %}" rel="stylesheet">
     <link href="{% static 'layout.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static '/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css' %}">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="{% static '/bootstrap/dist/js/jquery-3.7.1.min.js'%}"></script>
+    <script src="{% static '/bootstrap/dist/js/jquery-3.7.1.js'%}"></script>
+    <script src="{% static 'bootstrap/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"
+            integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+            crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
 
     {% block custom-css %}
 
@@ -57,16 +72,16 @@
                 <ul class="collapse list-unstyled"
                     id="homeSubmenu">
                     <li>
-                        <a href="{% url 'books' %}">Book</a>
+                        <a href="{% url 'book:books' %}">Book</a>
                     </li>
                     <li>
-                        <a href="{% url 'authors' %}">Author</a>
+                        <a href="{% url 'author:authors' %}">Author</a>
                     </li>
                     <li>
-                        <a href="{% url 'publishers'%}">Publisher</a>
+                        <a href="{% url 'publisher:publishers'%}">Publisher</a>
                     </li>
                     <li>
-                        <a href="{% url 'categories' %}">Category</a>
+                        <a href="{% url 'category:categories' %}">Category</a>
                     </li>
                 </ul>
             </li>
@@ -185,11 +200,6 @@
             <h2>Collapsible Sidebar Using Bootstrap
                 <span id="bootstrap-version"></span></h2>
 
-            <script>
-                window.onload = function() {
-                    document.getElementById("bootstrap-version").innerHTML = bootstrap.Tooltip.VERSION
-                }
-            </script>
 
             <p> Example of <a href="#" class="download-icon"> download link
             </a> and an <a href="" class="link-icon">External link</a></p>
@@ -205,8 +215,6 @@
 </div>
 
 
-<script src="{% static 'bootstrap/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'js/logout.js' %}"></script>
 {% block after-bootstrap-js %}
 
 {% endblock %}
