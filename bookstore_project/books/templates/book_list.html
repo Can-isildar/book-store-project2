@@ -2,155 +2,23 @@
 
 {% load static %}
 
+{% load i18n %}
+
 {% block css_files %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-
-
 {% endblock %}
 
-{% block page_title %}
-index.html
-{% endblock page_title %}
+{% block javascript %}
+<script src="{% static 'assets/books.js' %}"></script>
+{% endblock %}
 
 {% block content %}
-
-{% if filterForm %}
-<!--------------------------------------------------------------------------------------------------------------------------------------------------->
-
-<form method="get" action="{% url 'books' %}" id="filterForm" class="row gy-2 gx-3 align-items-center">
-    <div class="col-auto">
-        <label for="autoSizingInputGroup">
-            <div class="card">
-                <div class="card-body">
-                    <h6>Book Name <br> {{ filterForm.book_name }}</h6>
-                </div>
-            </div>
-        </label>
-
-        <label for="id_author">
-            <div class="card">
-                <div class="card-body">
-                    <h6>Author <br> {{ filterForm.author }}</h6>
-                </div>
-            </div>
-        </label>
-
-        <label for="id_publisher">
-            <div class="card">
-                <div class="card-body">
-                    <h6>Publisher <br> {{ filterForm.publisher }}</h6>
-                </div>
-            </div>
-        </label>
-
-        <label for="id_categories">
-            <div class="card">
-                <div class="card-body">
-                    <h6>Category <br> {{ filterForm.categories }}</h6>
-                </div>
-            </div>
-        </label>
-
-        <label for="id_price">
-            <div class="card">
-                <div class="card-body">
-                    <h6>Price <br> {{ filterForm.price }}</h6>
-                </div>
-            </div>
-        </label>
-        <br>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <a href="{% url 'books' %}" class="my-2" >
-               <button type="button" class="btn btn-outline-warning"> Reset </button>
-            </a>
-            <button type="submit" class="btn btn-outline-primary my-2">Filter</button>
-        </div>
-
-    </div>
-</form>
-{% if user.is_authenticated and user.is_staff %}
-<hr class="dropdown-divider">
-<form method="post" action="{% url 'books' %}" enctype="multipart/form-data" class="row gy-2 gx-3 align-items-center">{% csrf_token %}
-    <div class="col-auto">
-
-        <label for="id_book_name">
-            <div class="card">
-                <div class="card-body">
-                    <h6>Book <br> {{ form.book_name }}</h6>
-                </div>
-            </div>
-        </label>
-
-        <label for="id_author">
-            <div class="card">
-                <div class="card-body">
-                    <h6>Author <br> {{ form.author }}</h6>
-                </div>
-            </div>
-        </label>
-
-        <label for="id_publisher">
-            <div class="card">
-                <div class="card-body">
-                    <h6>Publisher <br> {{ form.publisher }}</h6>
-                </div>
-            </div>
-        </label>
-
-        <label for="id_categories">
-            <div class="card">
-                <div class="card-body">
-                    <h6>Category <br> {{ form.categories }}</h6>
-                </div>
-            </div>
-        </label><br>
-
-        <label for="id_price">
-            <div class="card">
-                <div class="card-body">
-                    <h6>Price <br> {{ form.price }} </h6>
-                </div>
-            </div>
-        </label>
-
-        <label for="formFile">
-            <div class="card">
-                <div class="card-body">
-                    <h6>Pub-Time <br> {{ form.pub_time }}</h6>
-                </div>
-            </div>
-        </label>
-
-        <label for="formFile">
-            <div class="card">
-                <div class="card-body">
-                    <h6>ISBN <br> {{ form.ISBN}}</h6>
-                </div>
-            </div>
-        </label>
-
-        <label for="formFile" aria-label="img sec">
-            <div class="card">
-                <div class="card-body">
-                    <h6> Image <br> {{ form.img }}</h6>
-                </div>
-            </div>
-        </label>
-        <br>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-            <button type="reset" value="Reset" id="resetBtn1"
-                    class="btn btn-outline-warning my-2">
-                Reset
-            </button>
-            <button type="submit" class="btn btn-outline-success my-2">Submit</button>
-        </div>
-    </div>
-</form>
-
-{% endif %}
-
-
-{% endif %}
+  <p>
+    <button type="button" class="btn btn-primary js-create-book" data-url="{% url 'book:book_create' %}">
+      <span class="glyphicon glyphicon-plus"></span>
+      New book
+    </button>
+  </p>
 
 <hr/>
 <h1>Book List</h1>
@@ -170,68 +38,16 @@ index.html
     </tr>
     </thead>
     <tbody>
-    <tbody>
-    {% for book in qs %}
-    <tr>
-        <td>{{ book.book_name}}</td>
-        {% if book.author %}
-        {% for a in book.author %}
-        <td>
-            {{a}}
-        </td>
-        {% endfor %}
-        {% else %}
-        <td>None</td>
-        {% endif %}
-        {% if book.publisher %}
-        {% for b in book.publisher %}
-        <td>{{b}}</td>
-        {% endfor %}
-        {% else %}
-        <td>None</td>
-        {% endif %}
-        <td>${{ book.price }}</td>
-        {% if book.categories %}
-        {% for c in book.categories %}
-        <td>{{c}}</td>
-        {% endfor %}
-        {% else %}
-        <td>None</td>
-        {% endif %}
-        {% if user.is_staff %}
-        <td>
-            <a href="{% url 'update_url_book' book.dbid  %}" class="btn btn-warning">Update</a>
-            <a href="{% url 'delete_url_book' book.dbid %}" class="btn btn-danger">Delete</a>
-        </td>
-        {% else %}
-        <td>
-            <a href="{% url 'book-detail' book.dbid %}" class="btn btn-info">Buy Now</a>
-        </td>
-        {% endif %}
-
-        {% endfor %}
+    {% include 'include/partial_book_list.html' %}
     </tbody>
 </table>
-</div>
-</div>
 
+  <div class="modal fade" id="modal-book">
+    <div class="modal-dialog">
+      <div class="modal-content">
 
-{% endblock %}
+      </div>
+    </div>
+  </div>
 
-
-{% block js_files %}
-<script>
-$(document).on('submit','#post-form',function(e) {
-e.preventDefault();
-$.ajax({
-type: 'POST',
-url : "http://127.0.0.1:8000/books",
-data: {
-csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-},
-success: function(data) {
-alert (data);
-});
-});
-</script>
 {% endblock %}

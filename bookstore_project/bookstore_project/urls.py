@@ -29,7 +29,7 @@ urlpatterns = [
                        name='login'),
                   path('homepage/', core_views.home, name='user-home'),
                   path('core/', include('core.urls')),
-                  path('books', include('books.urls'), name='book'),  # books uygulamasının URL'lerini ekleyin
+                  path('books/', include('books.urls')),  # books uygulamasının URL'lerini ekleyin
                   path('authors/', include('authors.urls'), name='author'),  # authors uygulamasının URL'lerini ekleyin
                   path('categories/', include('categories.urls'), name='category'),
                   # categories uygulamasının URL'lerini ekleyin

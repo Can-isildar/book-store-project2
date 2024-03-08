@@ -33,14 +33,9 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     "django_icons",
     "django_ajax",
-
+    'widget_tweaks',
 ]
 
-DJANGO_ICONS = {
-    "ICONS": {
-        "edit": {"name": "far fa-pencil"},
-    },
-}
 
 # Middleware sırasını belirtin
 MIDDLEWARE = [
@@ -51,8 +46,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'bookstore_project.middleware.custom_authentication.CustomAuthenticationMiddleware',  # Özel kimlik doğrulama
-    # middleware'i
+    'django.middleware.csrf.CsrfViewMiddleware'
 ]
 
 # URL konfigürasyonu

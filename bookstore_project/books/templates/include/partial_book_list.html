@@ -1,0 +1,33 @@
+
+{% for book in books %}
+<tr>
+    <td>{{ book.book_name }}</td>
+    {% if book.author %}
+    {% for author in book.author %}
+    <td>{{ author }}</td>
+    {% endfor %}
+    {% else %}
+    <td>None</td>
+    {% endif %}
+    {% if book.publisher %}
+    {% for publisher in book.publisher %}
+    <td>{{ publisher }}</td>
+    {% endfor %}
+    {% else %}
+    <td>None</td>
+    {% endif %}
+    <td>{{ book.price }}$</td>
+    {% if book.categories %}
+    {% for category in book.categories %}
+    <td>{{ category }}</td>
+    {% endfor %}
+    {% else %}
+    <td>None</td>
+    {% endif %}
+
+</tr>
+{% empty %}
+<tr>
+    <td colspan="7" class="text-center bg-warning">No book</td>
+</tr>
+{% endfor %}

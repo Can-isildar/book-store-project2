@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from rest_framework import status
-
+from django.views.decorators.csrf import csrf_exempt
 from .forms import AuthForm
 from .models import Author
 from .serializers import AuthorSerializer
@@ -13,6 +13,7 @@ from books.filter import BookFilter
 from django_ajax.decorators import ajax
 
 
+@csrf_exempt
 @login_required
 def author_list(request):
     form = AuthForm()
@@ -47,7 +48,7 @@ def author_list(request):
 #             form.save()
 #     context = {'form': form, 'name': 'Author', 'obj': obj}
 #     return JsonResponse(context)
-
+@csrf_exempt
 def author_update(request, pk):
     if request.method == 'POST':
         try:

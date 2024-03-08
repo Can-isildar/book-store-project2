@@ -15,10 +15,6 @@
     <link href="{% static 'fonts.css' %}" rel="stylesheet">
     <link href="{% static 'layout.css' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static '/bootstrap/bootstrap-icons/font/bootstrap-icons.min.css' %}">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script src="{% static '/bootstrap/dist/js/jquery-3.7.1.min.js'%}"></script>
     <script src="{% static '/bootstrap/dist/js/jquery-3.7.1.js'%}"></script>
@@ -26,9 +22,6 @@
     <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"
             integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
             crossorigin="anonymous"></script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
 
     {% block custom-css %}
@@ -153,36 +146,25 @@
                     </li>
                     {% endif %}
                     {% if user.is_authenticated == False %}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{% url 'signup' %}">Signup</a>
-                    </li>
+
+                    <a class="dropdown-item" href="{% url 'signup' %}">Signup</a>
+
                     <li class="nav-item active">
                         <a class="nav-link" href="{% url 'login' %}">Login</a>
                     </li>
                     {% endif %}
-                    <li class="nav-item dropdown">
-                        {% if user.is_authenticated %}
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarAdmin" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            Settings
-                        </a>
-                        {% endif %}
-                        <ul class="dropdown-menu" aria-labelledby="navbarAdmin">
-                            <li><a class="dropdown-item" href="{% url 'edit_profile' %}">
-                                Edit Profile</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            {% if user.is_authenticated %}
-                            <li class="nav-item-active mx-4">
-                                <form action="{% url 'logout' %}" method="post">
-                                    {% csrf_token %}
-                                    <button type="submit" class="nav-link">Logout</button>
-                                </form>
-                            </li>
-                            {% endif %}
-                        </ul>
-                        </ul>
+                    {% if user.is_authenticated %}
+                    {% endif %}
+                    <a class="dropdown-item my-1" href="{% url 'edit_profile' %}">
+                        Edit Profile</a>
+                    {% if user.is_authenticated %}
+                    <form class="dropdown-item" action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link">Logout</button>
+                    </form>
+
+                    {% endif %}
+
                 </div>
                 {% endblock %}
             </div>
@@ -214,9 +196,12 @@
     {% endblock %}
 </div>
 
+<script src="{% static 'bootstrap/dist/js/jquery-3.7.1.min.js' %}"></script>  <!-- JQUERY HERE -->
+<script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
+{% block javascript %}
+{% endblock %}
 
 {% block after-bootstrap-js %}
-
 {% endblock %}
 </body>
 </html>

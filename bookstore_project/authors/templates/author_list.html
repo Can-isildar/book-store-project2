@@ -7,7 +7,7 @@
 {% if user.is_authenticated and user.is_staff %}
 
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-        data-bs-whatever="@getbootstrap">Add Author
+        data-bs-whatever="Add Author">Add Author
 </button>
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -17,26 +17,32 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{% url 'author:authors' %}">
-                    {% csrf_token %}
+                <form method="post" action="{% url 'author:authors' %}">{% csrf_token %}
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Name:</label>
-                        {{ form.author_name}}
+                        <input type="text" id="author_name_input2" name="author_name"
+                               value="{{ form.author_name.value }}" class="form-control">
+
                     </div>
                     <div class="mb-3">
                         <label for="message-text" class="col-form-label">Surname:</label>
-                        {{ form.author_surname}}
+                        <input type="text" id="author_surname_input2" name="author_surname"
+                               value="{{ form.author_surname.value }}" class="form-control">
+
                     </div>
                     <div class="mb-3">
                         <label for="date" class="col-form-label">Birth Date:</label>
-                        {{ form.birth_date}}
+                        <input type="date" id="birthDate2" name="birthDate2"
+                               value="{{ form.birth_date.value }}" class="form-control">
+
                     </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Send message</button>
-            </div>
-            </form>
+                    </div>
+                         <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="">Send message</button>
+                         </div>
+                </form>
+
         </div>
     </div>
 </div>
@@ -75,15 +81,21 @@
                         {% csrf_token %}
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Name:</label>
-                            {{ form.author_name }}
+                            <input type="text" id="author_name_input" name="author_name"
+                                   value="{{ form.author_name.value }}" class="form-control">
+
                         </div>
                         <div class="mb-3">
                             <label for="message-text" class="col-form-label">Surname:</label>
-                            {{ form.author_surname }}
+                            <input type="text" id="author_surname_input" name="author_surname"
+                                   value="{{ form.author_surname.value }}" class="form-control">
+
                         </div>
                         <div class="mb-3">
                             <label for="date" class="col-form-label">Birth Date2:</label>
-                            {{ form.birth_date }}
+                            <input type="date" id="author_birthDate_input" name="birthDate"
+                                   value="{{ form.birth_date.value }}" class="form-control">
+
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -148,10 +160,72 @@
 </div>
 </div>
 
-{% endblock %}
-
-
 {% block js_files %}
+<script>
+    const exampleModal = document.getElementById('exampleModal');
 
-<script src="{% static 'js/script.js' %}"></script>
+    exampleModal.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget;
+        const recipient = button.getAttribute('data-bs-whatever');
+
+        const modalTitle = exampleModal.querySelector('.modal-title');
+        const modalBodyInput = exampleModal.querySelectorAll('.modal-body input');
+
+        modalTitle.textContent = `New message to ${recipient}`;
+        modalBodyInput[0].value = '';
+        modalBodyInput[1].value = '';
+        modalBodyInput[2].value = '';
+    });
+
+    // Formu göndermek için işlev
+    function submitForm(event) {
+        event.preventDefault(); // Formun sayfayı yenilemesini önle
+
+        const authorName = document.getElementById('author_name_input2').value;
+        const authorSurname = document.getElementById('author_surname_input2').value;
+        const birthDate = document.getElementById('birthDate2').value;
+
+        // Kontrolleri yapabilirsiniz - örneğin boş olup olmadığını kontrol edin
+        if (authorName.trim() === '' || authorSurname.trim() === '' || birthDate.trim() === '') {
+            alert('Tüm alanları doldurunuz!');
+            return;
+        }
+
+        // Form verilerini toplu bir FormData nesnesine ekleyin
+        const formData = new FormData();
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+        formData.append('author_name', authorName);
+        formData.append('author_surname', authorSurname);
+        formData.append('birthDate2', birthDate);
+        formData.append('csrfmiddlewaretoken', document.querySelector('input[name="csrfmiddlewaretoken"]').value);
+
+        // AJAX isteği gönder
+        fetch(event.target.action, {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json()) // Sunucudan gelen JSON yanıtı işle
+        .then(data => {
+            if (data.success) {
+                alert('Yazar başarıyla eklendi!');
+                $('#exampleModal').modal('hide');
+                window.location.reload(); // Sayfayı yeniden yükle
+            } else {
+                alert('Yazar eklenirken bir hata oluştu: ' + data.errors);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Form gönderilirken bir hata oluştu. Lütfen tekrar deneyin.');
+        });
+    }
+
+    // Forma submit olayı ekle
+    document.getElementById('author-form').addEventListener('submit', submitForm);
+
+</script>
 {% endblock %}
+
+{% endblock %}
+
+
